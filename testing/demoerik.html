@@ -1,0 +1,45 @@
+
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.10/webfont.js"></script>
+	
+<style>
+#ticketnumber {
+font-size: 14px;
+background: rgba(0, 0, 0, 0.13);
+padding: 10px;
+font-family: "Trebuchet MS", Arial, Helvetica, sans-serif!important;
+}
+a {
+color: #FFF;
+}
+</style>
+<script type="text/javascript">
+
+$.ajax({
+type: 'GET',
+url: 'https://projects.townsquaredigital.com/users.json?key=b815f9e67b757b706c222d6994a372a654ec85ba&status=1&group_id=292&name=', // query id from chili project determines results
+success: function(ChileProject) {
+result = ChileProject;
+var html = new Array();
+for (var i = result["users"].length - 1; i>= 0; i--) {
+var firstname = result["users"][i]["firstname"];
+var lastname = result["users"][i]["lastname"];
+var username = result["users"][i]["username"];
+var userID = result["users"][i]["id"];
+var userUrl = ("https://projects.townsquaredigital.com/issues.json?key=b815f9e67b757b706c222d6994a372a654ec85ba&assigned_to_id=" + userID + "&set_filter=1&sort=updated%3Adesc%2Cupdated_on%3Adesc");
+var template = "<br>" + "<br>" + firstname + " " + lastname + "'s User ID Is " + userID + " " + "<br><textarea height='300px' width='600px'>" + userUrl + "</textarea>";
+                      html.push(template);}
+                  $("#ticketnumber").html(html);},
+              error: function() {console.log('bummer');},
+          });</script>
+
+</head> 
+
+	
+<body>
+<div id="ticketnumber"></div>
+
+</body>
+

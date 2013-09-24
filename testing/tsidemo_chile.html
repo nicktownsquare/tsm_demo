@@ -1,0 +1,67 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<title>Multi-page template</title> 
+	<link rel="stylesheet" href="https://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
+	<script src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
+	<script src="https://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
+<style>
+h2 {
+font-size: 22px;
+background: rgba(0, 0, 0, 0.13);
+padding: 10px;
+}
+a {
+color: #FFF;
+}
+</style>
+<script type="text/javascript">
+
+$.ajax({
+type: 'GET',
+url: 'https://ads.townsquaredigital.com/users.json?key=b0a4591ad5ccef4fb4cceed89161cacac268f450&limit=300&status=1', // query id from chili project determines results
+success: function(ChileProject) {
+result = ChileProject;
+var html = new Array();
+for (var i = result["users"].length - 1; i>= 0; i--) {
+var firstname = result["users"][i]["firstname"];
+var lastname = result["users"][i]["lastname"];
+var username = result["users"][i]["username"];
+var userID = result["users"][i]["id"];
+var userUrl = ("https://ads.townsquaredigital.com/issues.json?key=b0a4591ad5ccef4fb4cceed89161cacac268f450&assigned_to_id=" + userID + "&set_filter=1&sort=updated%3Adesc%2Cupdated_on%3Adesc");
+var template = "<br>" + "<br>" + firstname + " " + lastname + "'s User ID Is " + userID + " " + "<br><textarea height='300px' width='600px'>" + userUrl + "</textarea>";
+                      html.push(template);}
+                  $("#ticketnumber").html(html);},
+              error: function() {console.log('bummer');},
+          });</script>
+
+</head> 
+
+	
+<body> 
+
+<!-- Start of first page: #one -->
+<div data-role="page" id="one" data-theme="a" data-content-theme="a">
+<div data-role="header">
+		<h1>TSI Demo API Pull By User</h1>
+	</div><!-- /header -->
+
+Demo of listing active users and generating active tickets JSON url which we will end up using to display their current issues.
+<div id="ticketnumber"></div>
+
+<div data-role="page" data-theme="a" data-content-theme="a">
+</div><!-- /content -->
+
+</div><!-- /page -->
+	
+	</div><!-- /content -->
+	
+	<div data-role="footer">
+		<h4>Kick The Tickets Ass</h4>
+	</div><!-- /footer -->
+</div><!-- /page popup -->
+
+</body>
+</html>

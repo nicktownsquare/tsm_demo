@@ -1,0 +1,62 @@
+
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+	
+<style>
+#ticketnumber, h2 {
+font-size: 14px;
+padding: 10px;
+padding-top: 1px;
+font-family: "Trebuchet MS", Arial, Helvetica, sans-serif!important;
+}
+#oneperson{width: 288px!important;
+float: left;
+margin-right: 18px;
+a {
+color: #FFF;
+}
+</style>
+<script type="text/javascript">
+
+$.ajax({
+type: 'GET',
+url: 'https://projects.townsquaredigital.com/users.json?key=b815f9e67b757b706c222d6994a372a654ec85ba&status=1&group_id=292&limit=100&name=', // query id from chili project determines results
+success: function(ChileProject) {
+result = ChileProject;
+var html = new Array();
+for (var i = result["users"].length - 1; i>= 0; i--) {
+var firstname = result["users"][i]["firstname"];
+var lastname = result["users"][i]["lastname"];
+var username = result["users"][i]["username"];
+var userID = result["users"][i]["id"];
+var atomURL = ("https://projects.townsquaredigital.com/activity.atom?key=b815f9e67b757b706c222d6994a372a654ec85ba&assigned_to_id=" + userID );
+var pdfURL = ("https://projects.townsquaredigital.com/issues.pdf?key=b815f9e67b757b706c222d6994a372a654ec85ba&assigned_to_id=" + userID + "&set_filter=1&sort=updated%3Adesc%2Cupdated_on%3Adesc");
+var csvURL = ("https://projects.townsquaredigital.com/issues.csv?key=b815f9e67b757b706c222d6994a372a654ec85ba&assigned_to_id=" + userID + "&set_filter=1&sort=updated%3Adesc%2Cupdated_on%3Adesc");
+var queryURL = ("https://projects.townsquaredigital.com/issues?key=b815f9e67b757b706c222d6994a372a654ec85ba&assigned_to_id=" + userID + "&set_filter=1&sort=updated%3Adesc%2Cupdated_on%3Adesc");
+var jsonURL = ("https://projects.townsquaredigital.com/issues.json?key=b815f9e67b757b706c222d6994a372a654ec85ba&assigned_to_id=" + userID + "&set_filter=1&sort=updated%3Adesc%2Cupdated_on%3Adesc");
+var template = "<div id='oneperson'><h1>" + firstname + " " + lastname + "</h2><pre>Chili Project User ID<strong> " + userID + " " + "<strong></pre><hr><a href='" + pdfURL + "'><button class='ui-button'>Assigned To You - pdf</button></a>"+ "<a href='" + csvURL + "'><button class='ui-button'>Assigned To You - csv</button></a>" +  "<a href='" + queryURL + "'><button class='ui-button'>Assigned To You - Chili Project</button></a>" + "<a href='" + jsonURL + "'><button class='ui-button'>Assigned To You - JSON</button></a>" + "<a href='" + atomURL + "'><button class='ui-button'>Your Activity - ATOM</button></a><hr></div>";
+
+                      html.push(template);}
+                  $("#ticketnumber").html(html);},
+              error: function() {console.log('bummer');},
+              
+             
+       
+          });
+       
+          </script>
+          
+         
+
+</head> 
+	
+<body>
+<div id="useridfield" value=""></div>
+<h2>Business Manager Chile API Pull - USERS</h2>
+<div id="ticketnumber"></div>
+<script>
+
+</script>
+</body>
+

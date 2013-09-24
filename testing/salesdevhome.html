@@ -1,0 +1,84 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+  <title>SALES DEV HUB</title> 
+  <link rel="stylesheet" href="https://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
+  <script src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
+  <script src="https://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+
+
+</script>
+  
+<style>
+h4 {
+font-size: 22px;
+background: rgba(0, 0, 0, 0.13);
+padding: 10px;
+}
+a {
+color: #FFF;
+}
+</style>
+</head> 
+
+  
+<body> 
+
+<!-- Start of first page: #one -->
+<div data-role="page" id="one" data-theme="a" data-content-theme="a">
+
+  <div data-role="content" data-theme="a">
+  <div data-role="header">
+    <h1>Sales Development Hub</h1>
+  </div><!-- /header -->
+  <a href="/testing/amiegreen_dash.html" rel="external" data-role="button" data-inline="true" data-icon="star">Amie Green</a>   <a href="/testing/kimyoung_dash.html" rel="external" data-role="button" data-inline="true" data-icon="star">Kim Young</a>  <a href="/testing/kevinforsyth_dash.html" rel="external" data-role="button" data-inline="true" data-icon="star">Kevin Forsyth</a> 
+<a href="/testing/angiemcswain_dash.html" rel="external" data-role="button" data-inline="true" data-icon="custom">Angie McSwain</a>
+  <a href="/testing/alltickets_dash.html" rel="external" data-role="button" data-inline="true" data-icon="star">All Tickets</a>
+ 
+</div><!-- /content -->
+
+</div><!-- /page -->
+  
+  </div><!-- /content -->
+  
+  <div data-role="footer">
+    <h4>Townsquare Media Sales Development</h4>
+  </div><!-- /footer -->
+</div><!-- /page popup -->
+
+<script>
+$('.showdetailsbutton').each(function(index) {
+            $(this).click(function() {
+                $(this).parent('div').parent('div').children('div.rfpdetails').slideToggle('fast');
+});
+});
+</script>
+
+<style>
+.showdetailsbutton {
+display: none;
+}
+h4 {
+background: rgba(0, 0, 0, 0.34);
+padding: 10px;
+}
+h2 {
+background: rgba(255, 255, 255, 0.12);
+padding: 18px;
+}
+.ui-title {
+background: rgba(0, 0, 0, 0);
+}
+.ui-mobile, .ui-mobile .ui-page {
+min-height: 300px;
+background: 
+white;
+}
+
+</style>
+</body>
+</html>

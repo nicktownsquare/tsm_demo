@@ -1,0 +1,215 @@
+
+<!DOCTYPE html> 
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<title>Multi-page template</title> 
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
+	<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
+<script type="text/javascript">
+(function($){
+  (function($){
+    $('#ticketnumber, #deckneeded, #conceptstweaked, #conceptspending, #decksdelivered').hide(); 
+ });
+        $.ajax({ //new sales dev requests
+              type: 'GET',
+              url: 'https://projects.townsquaredigital.com/projects/salesdev/issues.json?key=b815f9e67b757b706c222d6994a372a654ec85ba&query_id=1119', // query id from chili project determines results
+              success: function(data) {
+                  result = data;
+                  var html = new Array();
+                  for (var i = result["issues"].length - 1; i >= 0; i--) {
+                      var myid = result["issues"][i]["id"];
+                      var updatedon = result["issues"][i]["updated_on"];
+                      var concept = result["issues"][i]["custom_fields"][13]["value"];
+                      var description = result["issues"][i]["custom_fields"][12]["value"];
+                      var template =  "<div data-role='collapsible' data-collapsed='false'><a href='#'><h3>" + result["issues"][i]["subject"] + "</h3><div id='updatedwhen'>updated on<span data='testingthis'> " + updatedon + "</span></div></h2>" +"<div id='delivery_btn'><a href='" + concept + "&ticket_number=" + myid + "'><button id='deliverconceptbutton' class='ui-button' class='ui-button'>Deliver Concept</button></a></div>" + "<br>" +
+                                      "<div>" + "<div><button class='showdetailsbutton ui-button'>show/hide details</button></div>" +"</a></li></ul><div class='rfpdetails'>" + "<iframe src='" + description + "'  height='500' width='800'  scrolling='no'>" + "</iframe></div>";
+                      html.push(template);}
+                  $("#ticketnumber").slideDown().html(html);},
+              error: function() {console.log('bummer');},
+          });
+        
+            $.ajax({ //deckneeded
+              type: 'GET',
+              url: 'request.php?id=284', // query id from chili project determines results
+              success: function(data) {
+                  result = data;
+                  var html = new Array();
+                  for (var i = result["issues"].length - 1; i >= 0; i--) {
+                      var myid = result["issues"][i]["id"];
+                      var updatedon = result["issues"][i]["updated_on"];
+                      var concept = result["issues"][i]["custom_fields"][23]["value"];
+                      var description = result["issues"][i]["custom_fields"][22]["value"];
+                      var template =  "<br><h2>" + result["issues"][i]["subject"] + "<div id='updatedwhen'>updated on<span data='testingthis'> " + updatedon + "</span></div></h2>" +"<div id='delivery_btn'><a href='" + concept  + "'><button id='deliverconceptbutton' class='ui-button'>Deliver Deck</button></a></div>" + "<br>" +
+                                      "<div>" + "<div><button class='showdetailsbutton'>show/hide concept</button></div>" +"<div class='rfpdetails'>" + description + "</div>";
+                      html.push(template);}
+                  $("#deckneeded").slideDown().html(html);},
+              error: function() {console.log('bummer');},
+          }); 
+
+        $.ajax({ //concept tweaked
+          type: 'GET',
+          url: 'request.php?id=285', // query id from chili project determines results
+          success: function(data) {
+              result = data;
+              var html = new Array();
+              for (var i = result["issues"].length - 1; i >= 0; i--) {
+                  var myid = result["issues"][i]["id"];
+                  var updatedon = result["issues"][i]["updated_on"];
+                  var concept = result["issues"][i]["custom_fields"][13]["value"];
+                  var tweak = result["issues"][i]["custom_fields"][19]["value"];
+                  var description = result["issues"][i]["custom_fields"][22]["value"];
+                  var template =  "<br><h2>" + result["issues"][i]["subject"] + "<div id='updatedwhen'>updated on<span data='testingthis'> " + updatedon + "</span></div></h2>" + "<div id='delivery_btn'><a href='" + concept + "&ticket_number=" + myid + "'><button id='deliverconceptbutton' class='ui-button'>Deliver New Concept</button></a></div>" + "<br>" +
+                                  "<div>" + "<div><button class='showdetailsbutton'>show/hide tweak</button></div>" +"<div class='rfpdetails'>"  + tweak + "<br>" + "<h6>Original Concept</h6>" + "<br>" + description + "</div>";
+                  html.push(template);}
+              $("#conceptstweaked").slideDown().html(html);},
+          error: function() {console.log('bummer');},
+
+      });
+ $.ajax({ //concept pending
+          type: 'GET',
+          url: 'request.php?id=289', // query id from chili project determines results
+          success: function(data) {
+              result = data;
+              var html = new Array();
+              for (var i = result["issues"].length - 1; i >= 0; i--) {
+                  var myid = result["issues"][i]["id"];
+                  var updatedon = result["issues"][i]["updated_on"];
+                  var concept = result["issues"][i]["custom_fields"][13]["value"];
+                  var description = result["issues"][i]["custom_fields"][22]["value"];
+                 var template =  "<div data-role='collapsible; data-mini='true'><br><h2>" + result["issues"][i]["subject"] + "<div id='updatedwhen'>updated on<span data='testingthis'> " + updatedon + "</span></div></h2>" + "<div id='delivery_btn'><a href='" + concept + "&ticket_number=" + myid + "'><button id='deliverconceptbutton' class='ui-button' class='ui-button'>Deliver New Concept</button></a></div>" + "<br>" +
+                                  "<div>" + "<div><button class='showdetailsbutton ui-button'>show/hide concept</button></div>" +"<div class='rfpdetails'>"  + "<br>" + description + "</div></div>";
+                  html.push(template);}
+              $("#conceptspending").slideDown().html(html);},
+          error: function() {console.log('bummer');},
+      });
+
+
+        $.ajax({ //decks delivered
+          type: 'GET',
+          url: 'request.php?id=288', // query id from chili project determines results
+          success: function(data) {
+              result = data;
+              var html = new Array();
+              for (var i = result["issues"].length - 1; i >= 0; i--) {
+                  var myid = result["issues"][i]["id"];
+                  var updatedon = result["issues"][i]["updated_on"];
+                  var concept = result["issues"][i]["custom_fields"][13]["value"];
+                  var description = result["issues"][i]["custom_fields"][18]["value"];
+                  var template =  "<br><h2>" + result["issues"][i]["subject"] + "<div id='updatedwhen'>updated on<span data='testingthis'> " + updatedon + "</span></div></h2>" + "<div id='delivery_btn'><a href='" + concept + "&ticket_number=" + myid + "'><button id='deliverconceptbutton' class='ui-button'>Deliver Concept</button></a></div>" + "<br>" +
+                                  "<div>" + "<div><button class='showdetailsbutton ui-button'>show/hide deck</button></div>" +"<div class='rfpdetails'>'" + "<iframe src='" + description + "' height='500' width='800'  scrolling='no'>" + "</iframe></div>";
+                  html.push(template);}
+              $("#decksdelivered").slideDown().html(html);},
+          error: function() {console.log('bummer');},
+      });
+	 
+})(jQuery);
+</script>
+
+</head> 
+
+	
+<body> 
+
+<!-- Start of first page: #one -->
+<div data-role="page" id="one">
+
+	<div data-role="header">
+		<h1>Amie's Dash</h1>
+	</div><!-- /header -->
+	
+        <a href="testchile_hw1.html&ui-page=listview-1" data-role="button" data-theme="a"data-transition="pop">I'll pop</a>
+
+<a  data-url="artists.html&ui-page=listview-1" data-role="button" data-icon="star" data-theme="a">Kim Young</a>
+<a  data-url="artists.html&ui-page=listview-1" data-role="button" data-icon="star" data-theme="a">Kevin Forsyth</a>
+<div data-role="controlgroup">
+<a href="kevinforsyth_chile.html" data-role="button">Yes</a>
+<a href="index.html" data-role="button">No</a>
+<a href="index.html" data-role="button">Maybe</a>
+</div>
+		
+		<p>This is a multi-page boilerplate template that you can copy to build your first jQuery Mobile page. This template contains multiple "page" containers inside, unlike a <a href="page-template.html"> single page template</a> that has just one page within it.</p>	
+		<p>Just view the source and copy the code to get started. All the CSS and JS is linked to the jQuery CDN versions so this is super easy to set up. Remember to include a meta viewport tag in the head to set the zoom level.</p>
+		<p>You link to internal pages by referring to the <code>id</code> of the page you want to show. For example, to <a href="#two" >link</a> to the page with an <code>id</code> of "two", my link would have a <code>href="#two"</code> in the code.</p>	
+
+		<h3>Show internal pages:</h3>
+		<p><a href="#two" data-role="button">Show page "two"</a></p>	
+		<p><a href="#popup" data-role="button" data-rel="dialog" data-transition="pop">Show page "popup" (as a dialog)</a></p>
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-theme="d">
+		<h4>Page Footer</h4>
+	</div><!-- /footer -->
+</div><!-- /page one -->
+
+
+<!-- Start of second page: #two -->
+<div data-role="page" id="two" data-theme="a">
+
+	<div data-role="header">
+		<h1>Kevin Forsyth's Active Tickets</h1>
+	</div><!-- /header -->
+
+	<div data-role="content" data-theme="a">	
+	<div data-role="header">
+		<h1>Kevin Forsyth Active Tickets</h1>
+	</div><!-- /header -->
+    <div data-role="content">
+<h2>Deck Needed</h2>
+<div id="deckneeded"></div>
+<h2>Concept Tweaked</h2>
+<div id="conceptstweaked"></div>
+<h2>Concepts Pending</h2>
+<div id="conceptspending"></div>
+<h2>Decks Delivered</h2>
+<div id="decksdelivered"></div>
+
+<div data-role="page" data-theme="a" data-content-theme="a">
+
+	<div data-role="header">
+		<h1>Kevin Forsyth Active Tickets</h1>
+	</div><!-- /header -->
+    <div data-role="content">
+<h2>Deck Needed</h2>
+<div id="deckneeded"></div>
+<h2>Concept Tweaked</h2>
+<div id="conceptstweaked"></div>
+<h2>Concepts Pending</h2>
+<div id="conceptspending"></div>
+<h2>Decks Delivered</h2>
+<div id="decksdelivered"></div>
+</div><!-- /content -->
+
+</div><!-- /page -->
+		<p><a href="#one" data-direction="reverse" data-role="button" data-theme="b">Back to page "one"</a></p>	</div>
+		
+	</div><!-- /content -->
+	
+	<div data-role="footer">
+		<h4>Page Footer</h4>
+	</div><!-- /footer -->
+</div><!-- /page two -->
+
+
+<!-- Start of third page: #popup -->
+<div data-role="page" id="popup">
+
+	<div data-role="header" data-theme="e">
+		<h1>Dialog</h1>
+	</div><!-- /header -->
+
+	<div data-role="content" data-theme="d">	
+		<h2>Popup</h2>
+		<p>I have an id of "popup" on my page container and only look like a dialog because the link to me had a <code>data-rel="dialog"</code> attribute which gives me this inset look and a <code>data-transition="pop"</code> attribute to change the transition to pop. Without this, I'd be styled as a normal page.</p>		
+		<p><a href="#one" data-rel="back" data-role="button" data-inline="true" data-icon="back">Back to page "one"</a></p>	
+	</div><!-- /content -->
+	
+	<div data-role="footer">
+		<h4>Page Footer</h4>
+	</div><!-- /footer -->
+</div><!-- /page popup -->
+
+</body>
+</html>

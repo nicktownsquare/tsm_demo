@@ -1,0 +1,220 @@
+
+<!DOCTYPE html> 
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<title>Multi-page template</title> 
+ <link rel="stylesheet" href="https://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
+  <script src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
+  <script src="https://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
+</head> 
+
+	
+<body> 
+
+<!-- Start of first page: #one -->
+<div data-role="page" id="one" data-theme="c" data-content-theme="c">
+<script type="text/javascript">
+(function($){
+    $('#ticketnumber, #deckneeded, #conceptstweaked, #conceptspending, #decksdelivered').hide(); 
+ });
+(function($){
+  
+
+        $.ajax({ //new sales dev requests
+              type: 'GET',
+              url: 'request.php?id=292', // query id from chili project determines results
+              success: function(data) {
+                  result = $.parseJSON(data);
+                  var html = new Array();
+                  for (var i = result["issues"].length - 1; i >= 0; i--) {
+                      var myid = result["issues"][i]["id"];
+                      var updatedon = result["issues"][i]["updated_on"];
+                      var concept = result["issues"][i]["custom_fields"][13]["value"];
+                      var description = result["issues"][i]["custom_fields"][12]["value"];
+                      var template =  "<br><h2>" + result["issues"][i]["subject"] + "<div id='updatedwhen'>updated on<span data='testingthis'> " + updatedon + "</span></div></h2>" +"<div id='delivery_btn'><a rel='external' href='" + concept + "&ticket_number=" + myid + "'><button id='deliverconceptbutton' class='ui-button'>Deliver Concept</a></div>" + "<br>" +
+                                      "<div>" + "<div><button class='showdetailsbutton ui-button'>show/hide details</div>" +"<div class='rfpdetails'>" + "<iframe src='" + description + "'  height='500' width='800'  scrolling='no'>" + "</iframe></div>";
+                      html.push(template);}
+                  $("#ticketnumber").slideDown().html(html);},
+              error: function() {console.log('bummer');},
+          });
+        
+            $.ajax({ //deckneeded
+              type: 'GET',
+              url: 'request.php?id=291', // query id from chili project determines results
+              success: function(data) {
+                  result = $.parseJSON(data);
+                  var html = new Array();
+                  for (var i = result["issues"].length - 1; i >= 0; i--) {
+                      var myid = result["issues"][i]["id"];
+                      var updatedon = result["issues"][i]["updated_on"];
+                      var concept = result["issues"][i]["custom_fields"][23]["value"];
+                      var description = result["issues"][i]["custom_fields"][22]["value"];
+                      var template =  "<br><h2>" + result["issues"][i]["subject"] + "<div id='updatedwhen'>updated on<span data='testingthis'> " + updatedon + "</span></div></h2>" +"<div id='delivery_btn'><a rel='external' href='" + concept  + "'>Deliver Deck</a></div>" + "<br>" +
+                                      "<div>" + "<div><button class='showdetailsbutton'>show/hide concept</div>" +"<div class='rfpdetails'>" + description + "</div>";
+                      html.push(template);}
+                  $("#deckneeded").slideDown().html(html);},
+              error: function() {console.log('bummer');},
+          }); 
+
+        $.ajax({ //concept tweaked
+          type: 'GET',
+          url: 'request.php?id=294', // query id from chili project determines results
+          success: function(data) {
+              result = $.parseJSON(data);
+              var html = new Array();
+              for (var i = result["issues"].length - 1; i >= 0; i--) {
+                  var myid = result["issues"][i]["id"];
+                  var updatedon = result["issues"][i]["updated_on"];
+                  var concept = result["issues"][i]["custom_fields"][13]["value"];
+                  var tweak = result["issues"][i]["custom_fields"][19]["value"];
+                  var description = result["issues"][i]["custom_fields"][22]["value"];
+                  var template =  "<br><h2>" + result["issues"][i]["subject"] + "<div id='updatedwhen'>updated on<span data='testingthis'> " + updatedon + "</span></div></h2>" + "<div id='delivery_btn'><a rel='external' href='" + concept + "&ticket_number=" + myid + "' data-role='button' data-inline='true' >Deliver New Concept</a></div>" + "<br>" +
+                                  "<div>" + "<div><button class='showdetailsbutton'>show/hide tweak</div>" +"<div class='rfpdetails'>"  + tweak + "<br>" + "<h6>Original Concept</h6>" + "<br>" + description + "</div><hr>";
+                  html.push(template);}
+              $("#conceptstweaked").slideDown().html(html);},
+          error: function() {console.log('bummer');},
+
+      });
+ $.ajax({ //concept pending
+          type: 'GET',
+          url: 'request.php?id=293', // query id from chili project determines results
+          success: function(data) {
+              result = $.parseJSON(data);
+              var html = new Array();
+              for (var i = result["issues"].length - 1; i >= 0; i--) {
+                  var myid = result["issues"][i]["id"];
+                  var updatedon = result["issues"][i]["updated_on"];
+                  var concept = result["issues"][i]["custom_fields"][13]["value"];
+                  var description = result["issues"][i]["custom_fields"][22]["value"];
+                 var template =  "<br><h2>" + result["issues"][i]["subject"] + "<div id='updatedwhen'>updated on<span data='testingthis'> " + updatedon + "</span></div></h2>" + "<div id='delivery_btn'><a rel='external' href='" + concept + "&ticket_number=" + myid + "'>Deliver New Concept</a></div>" + "<br>" +
+                                  "<div>" + "<div><button class='showdetailsbutton ui-button'>show/hide concept</div>" +"<div class='rfpdetails'>"  + "<br>" + description + "</div><hr>";
+                  html.push(template);}
+              $("#conceptspending").slideDown().html(html);},
+          error: function() {console.log('bummer');},
+      });
+
+
+        $.ajax({ //decks delivered
+          type: 'GET',
+          url: 'request.php?id=295', // query id from chili project determines results
+          success: function(data) {
+              result = $.parseJSON(data);
+              var html = new Array();
+              for (var i = result["issues"].length - 1; i >= 0; i--) {
+                  var myid = result["issues"][i]["id"];
+                  var updatedon = result["issues"][i]["updated_on"];
+                  var concept = result["issues"][i]["custom_fields"][13]["value"];
+                  var description = result["issues"][i]["custom_fields"][18]["value"];
+                  var template =  "<br><h2>" + result["issues"][i]["subject"] + "<div id='updatedwhen'>updated on<span data='testingthis'> " + updatedon + "</span></div></h2>" + "<div id='delivery_btn'><a rel='external' href='" + concept + "&ticket_number=" + myid + " data-role='button' data-inline='true' >Deliver Concept</a></div>" + "<br>" +
+                                  "<div>" + "<div><button class='showdetailsbutton'>show/hide deck</div>" +"<div class='rfpdetails'>'" + "<iframe src='" + description + "' height='500' width='800'  scrolling='no'>" + "</iframe></div> <hr>";
+                  html.push(template);}
+              $("#decksdelivered").slideDown().html(html);},
+          error: function() {console.log('bummer');},
+      });
+
+$.ajax({ //decks delivered
+          type: 'GET',
+          url: 'request.php?id=278', // query id from chili project determines results
+          success: function(data) {
+              result = $.parseJSON(data);
+              var html = new Array();
+              for (var i = result["issues"].length - 1; i >= 0; i--) {
+                  var myid = result["issues"][i]["id"];
+                  var updatedon = result["issues"][i]["updated_on"];
+                  var concept = result["issues"][i]["custom_fields"][13]["value"];
+                  var description = result["issues"][i]["custom_fields"][18]["value"];
+                  var template =  "<br><h2>" + result["issues"][i]["subject"] + "<div id='updatedwhen'>updated on<span data='testingthis'> " + updatedon + "</span></div></h2>" + "<div id='delivery_btn'><a rel='external' href='" + concept + "&ticket_number=" + myid + " data-role='button' data-inline='true' >Deliver Concept</a></div>" + "<br>" +
+                                  "<div>" + "<div><button class='showdetailsbutton'>show/hide deck</div>" +"<div class='rfpdetails'>'" + "<iframe src='" + description + "' height='500' width='800'  scrolling='no'>" + "</iframe></div>";
+                  html.push(template);}
+              $("#alltickets").slideDown().html(html);},
+          error: function() {console.log('bummer');},
+      });
+     
+})(jQuery);
+
+</script>
+<img class="alignnone size-medium wp-image-10527" alt="tsm_lab_logo_transp" src="https://townsquarelab.com/wp-content/uploads/2013/07/tsm_lab_logo_transp-300x294.png" width="300" height="294" />
+<div data-role="header">
+
+		<h1>Sales Dev Dashboard: Amie Green</h1>
+	</div><!-- /header -->
+
+	
+             <a href="https://townsquarelab.com/testing/amiegreen_dash.html" rel="external"data-mini="true" data-role="button" data-theme="b">Amie's Tickets</a>
+              <a href="https://townsquarelab.com/testing/kevinforsyth_dash.html" rel="external"data-mini="true" data-role="button" data-theme="b">Kevin's Tickets</a>
+        <a href="https://townsquarelab.com/testing/kimyoung_dash.html" rel="external" data-mini="true" data-role="button"data-theme="b">Kim's Tickets</a>	
+		
+        	
+	<div data-role="collapsible" data-theme="c" data-mini="true"data-content-theme="a">
+    <h2>ALL ACTIVE TICKETS</h2>
+			
+<div data-role="collapsible" data-theme="a" data-content-theme="a">
+<h2>Decks Needed</h2>
+<div id="deckneeded">no active tickets</div>
+</div>
+ <div data-role="collapsible" data-theme="a" data-content-theme="a">
+<h2>Tweaked Concepts</h2>
+<div id="conceptstweaked">no active tickets
+</div></div>
+ <div data-role="collapsible" data-theme="a" data-content-theme="a">
+ <h2>Concepts Pending</h2>
+<div id="conceptspending">no active tickets
+</div></div>
+
+</div>
+<div data-role="collapsible" data-theme="c" data-mini="true"data-content-theme="a">
+<h2>Decks Delivered</h2>
+<div id="decksdelivered"></div>
+<div data-role="collapsible" data-theme="c" data-mini="true"data-content-theme="a">
+<h2>All Active Tickets</h2>
+<div id="alltickets"></div>
+<hr>
+
+</div>
+<br>
+
+</div>
+</div>
+</div>
+
+<br>
+<br>
+<style>
+#one {
+padding: 7%;
+width: 82%;
+background: #FFF;
+}
+#updatedwhen {
+font-size: 14px;
+font-weight: lighter;
+}
+a {
+color: #FFF;
+}
+.ui-collapsible-content.ui-body-a.ui-corner-bottom {
+padding-bottom: 60px;
+}
+.showdetailsbutton {
+display: none;
+}
+.ui-btn-text {
+font-size: 20px!important;
+}
+h2 {
+margin-top: 1px;
+}
+</style>
+		
+<div data-role="footer">	
+<h2>Townsquare Sales Dev</h2>
+	
+	
+		
+	</div><!-- /footer -->
+	</div><!-- /content -->
+
+</body>
+</html>
